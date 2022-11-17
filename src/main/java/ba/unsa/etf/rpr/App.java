@@ -1,12 +1,13 @@
 package ba.unsa.etf.rpr;
 
 /**
- * Hello world!
+ * Main class for parsing console input using args function parameter and validating said input, before passing it to
+   ExpressionEvaluator function.
  *
  */
 public class App 
 {
     public static void main( String[] args ){
-        System.out.println( "Hello World!" );
+
     }
 }
