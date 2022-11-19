@@ -37,17 +37,17 @@ public class App{
                 int rightParentheses = 0;
                 int numberOfOperators = 0;
                 for (int i = 0; i < s.length(); i++) {  // replaced the ranged for loop as we will probably be in need to access next and previous String relative to current position at one point
-                    if(i%2 != 0 && i != s.length() - 1 && s.charAt(i) != ' '){ // whitespaces are positioned on odd index numbers, except for eventually the last position, which should always be ')'
-                        throw new RuntimeException("Izraz nije aritmetički validan!");
+                    if(i % 2 != 0 && i != s.length() - 1 && s.charAt(i) != ' '){ // whitespaces are positioned on odd index numbers, except for eventually the last position, which should always be ')'
+                       throw new RuntimeException("Izraz nije aritmetički validan!");
                     }
-                    if (!isDigit(s.charAt(i)) && s.charAt(i)!='(' && s.charAt(i)!=')' && !checkIfOperator(s.charAt(i), i, s)) {
+                    if (!isDigit(s.charAt(i)) && s.charAt(i)!='(' && s.charAt(i)!=')' && !checkIfOperator(i, s)) {
                         throw new RuntimeException("Izraz nije aritmetički validan!");
                     }
                     if (s.charAt(i) == '(') {
                         leftParentheses = leftParentheses + 1;
                     } else if (s.charAt(i) == ')') {
                         rightParentheses = rightParentheses + 1;
-                    } else if (checkIfOperator(s.charAt(i), i, s)) {
+                    } else if (checkIfOperator(i, s)) {
                         checkOperatorSurroundings(s, i);
                         numberOfOperators = numberOfOperators + 1;
                     }
@@ -70,16 +70,15 @@ public class App{
     /**
      * Checks if char parameter is one of the operators we are working with
      * Used in main method for better code readability
-     * @param c - char to be tested
      * @param i - index of the current char
      * @param s - string containing the whole arithmetic expression
      * @return - returns true if parameter char is an operator, otherwise return value is false
      */
-    private static boolean checkIfOperator(char c, int i, String s){
-        if(c == 's' && s.charAt(i+1) == 'q' && s.charAt(i+2) == 'r' && s.charAt(i+3) == 't'){
+    private static boolean checkIfOperator(int i, String s){
+        if(s.charAt(i) == 's' && s.charAt(i+1) == 'q' && s.charAt(i+2) == 'r' && s.charAt(i+3) == 't'){
             return true;
         }
-        return c == '+' || c == '-' || c == '*' || c == '/';
+        return s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/';
     }
 
     /**
@@ -104,7 +103,7 @@ public class App{
             }
         }
         else{
-            if(!(s.charAt(i-2) == '(' && s.charAt(i+2) == '(' || checkIfOperator(s.charAt(i-2), i-2, s) && s.charAt(i+2) == '(')){
+            if(!(s.charAt(i-2) == '(' && s.charAt(i+2) == '(' || checkIfOperator(i-2, s) && s.charAt(i+2) == '(')){
                 throw new RuntimeException("Izraz nije aritmetički validan!");
             }
         }
