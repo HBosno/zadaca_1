@@ -11,7 +11,7 @@ public class ExpressionEvaluator {
      * @param expression - String type containing the arithmetic expression to be evaluated
      * @return - Double type result of the arithmetic expression represented by above String parameter
      */
-    public static Double evaluate(String expression){
+    public Double evaluate(String expression){
 
         Stack<String> operators = new Stack<>();
         Stack<Double> operands = new Stack<>();

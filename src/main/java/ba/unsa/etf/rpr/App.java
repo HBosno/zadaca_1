@@ -19,10 +19,32 @@ public class App{
             if (!args[0].equals("(") || !args[args.length - 1].equals(")")) {
                 throw new RuntimeException("Izraz nije aritmetički validan!");
             }
-            for (String s : args) {
-
-                builder.append(s).append(" ");
+            int leftParentheses = 0;
+            int rightParentheses = 0;
+            int numberOfOperators = 0;
+            for (int i = 0; i < args.length; i++) {  // replaced the ranged for loop as we will probably be in need to access next and previous String relative to current position at one point
+                if(args[i].equals("(")){
+                    leftParentheses = leftParentheses + 1;
+                }
+                else if(args[i].equals(")")){
+                    rightParentheses = rightParentheses + 1;
+                }
+                else if(args[i].equals("+") || args[i].equals("-") || args[i].equals("*") || args[i].equals("/") || args[i].equals("sqrt")){
+                    numberOfOperators = numberOfOperators + 1;
+                }
+                builder.append(args[i]);
+                if(i != args.length - 1){
+                    builder.append(" ");
+                }
             }
+
+            // should we analyze the expressions we are working with, we will come to the conclusion that each left parenthesis corresponds to a single operator
+            // obviously, we also need a matching number of right parentheses with respect to their left counterparts
+            if(leftParentheses != numberOfOperators || leftParentheses != rightParentheses){
+                throw new RuntimeException("Izraz nije aritmetički validan!");
+            }
+            ExpressionEvaluator evaluator = new ExpressionEvaluator();
+            System.out.println("Vrijednost unesenog aritmetičkog izraza: " + evaluator.evaluate(builder.toString()));
         }
         catch(RuntimeException e) {
             e.printStackTrace();
