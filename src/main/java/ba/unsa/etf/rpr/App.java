@@ -35,6 +35,7 @@ public class App{
                     rightParentheses = rightParentheses + 1;
                 }
                 else if(checkIfOperator(args[i])){
+                    checkOperatorSurroundings(args, i);
                     numberOfOperators = numberOfOperators + 1;
                 }
                 builder.append(args[i]);
@@ -64,6 +65,34 @@ public class App{
      */
     private static boolean checkIfOperator(String s){
         return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("sqrt");
+    }
+
+    /**
+     * Important in expression validation. For operators +, -, * and / the following are valid constructions:
+     1. ) operator (
+     2. number operator number
+     3. ) operator number
+     4. number operator (
+     * For sqrt operator, the following are valid constructions:
+     1. ( sqrt (
+     2. operator sqrt (, where operator is any operator excluding sqrt
+     * Note that we can still have expressions such as a fourth root (number^(1/4) or sqrt(sqrt number)) however this is covered by case 1 as the valid expression would look as following:
+       sqrt ( sqrt ( number ) )
+     * @param args - String array, main input from console
+     * @param i - index of the String we are currently testing
+     * @throws RuntimeException if the expression is not valid
+     */
+    private static void checkOperatorSurroundings(String[] args, int i) throws RuntimeException{
+        if(!args[i].equals("sqrt")){
+            if(!(args[i-1].equals(")") && args[i+1].equals("(") || isNumeric(args[i-1]) && isNumeric(args[i+1]) || args[i-1].equals(")") && isNumeric(args[i+1]) || isNumeric(args[i-1]) && args[i+1].equals("("))){
+                throw new RuntimeException("Izraz nije aritmetički validan!");
+            }
+        }
+        else{
+            if(!(args[i-1].equals("(") && args[i+1].equals("(") || checkIfOperator(args[i-1]) && !args[i-1].equals("sqrt") && args[i+1].equals("("))){
+                throw new RuntimeException("Izraz nije aritmetički validan!");
+            }
+        }
     }
 }
 
