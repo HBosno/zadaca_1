@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr;
 
+import static org.apache.maven.shared.utils.StringUtils.isNumeric;
+
 /**
  * Main class for parsing console input using args function parameter and validating said input, before passing it to
    ExpressionEvaluator function
@@ -23,13 +25,16 @@ public class App{
             int rightParentheses = 0;
             int numberOfOperators = 0;
             for (int i = 0; i < args.length; i++) {  // replaced the ranged for loop as we will probably be in need to access next and previous String relative to current position at one point
+                if(!isNumeric(args[i]) && !args[i].equals("(") && !args[i].equals(")") && !checkIfOperator(args[i])){
+                    throw new RuntimeException("Izraz nije aritmetički validan!");
+                }
                 if(args[i].equals("(")){
                     leftParentheses = leftParentheses + 1;
                 }
                 else if(args[i].equals(")")){
                     rightParentheses = rightParentheses + 1;
                 }
-                else if(args[i].equals("+") || args[i].equals("-") || args[i].equals("*") || args[i].equals("/") || args[i].equals("sqrt")){
+                else if(checkIfOperator(args[i])){
                     numberOfOperators = numberOfOperators + 1;
                 }
                 builder.append(args[i]);
@@ -49,6 +54,16 @@ public class App{
         catch(RuntimeException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Checks if parameter String is one of the operators we are working with
+     * Used in main method for better code readability
+     * @param s - String to be tested
+     * @return - returns true if parameter string is an operator, otherwise return value is false
+     */
+    private static boolean checkIfOperator(String s){
+        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("sqrt");
     }
 }
 
