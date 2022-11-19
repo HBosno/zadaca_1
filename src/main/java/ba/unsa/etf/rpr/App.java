@@ -20,16 +20,17 @@ public class App{
      * @throws RuntimeException - Will throw an exception in case of an invalid arithmetic expression
      */
     public static void main( String[] args ) throws RuntimeException {
+
         if(args.length==0){
             System.out.println("Unesite funkciju: ");
-            String function;
+            String function="";
             Scanner scanner = new Scanner(System.in);
             function = scanner.nextLine();
             System.out.println("Vrijednost unesenog aritmetičkog izraza: " + (new ExpressionEvaluator()).evaluate(function));
         }
         else {
             try {
-                String s = args[0];
+               String s = args[0];
                 if (!(s.charAt(0) == '(') || !(s.charAt(s.length()-1) == ')')) {
                     throw new RuntimeException("Izraz nije aritmetički validan!");
                 }
@@ -64,7 +65,7 @@ public class App{
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
-        }
+               }
     }
 
     /**

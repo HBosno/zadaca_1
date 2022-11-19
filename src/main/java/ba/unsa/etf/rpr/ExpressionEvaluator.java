@@ -70,12 +70,16 @@ public class ExpressionEvaluator {
         switch(operator) {
             case "+":
                 operand = operands.pop() + operand;
+                break;
             case "-":
                 operand = operands.pop() - operand;
+                break;
             case "*":
                 operand = operands.pop() * operand;
+                break;
             case "/":
                 operand = operands.pop() / operand;
+                break;
             default:
                 operand = Math.sqrt(operand);
         }
