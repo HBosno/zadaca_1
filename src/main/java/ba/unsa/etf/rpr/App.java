@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr;
 
+import java.util.Scanner;
+
 import static java.lang.Character.isDigit;
 
 //import static org.apache.maven.shared.utils.StringUtils.isNumeric;
@@ -18,6 +20,14 @@ public class App{
      * @throws RuntimeException - Will throw an exception in case of an invalid arithmetic expression
      */
     public static void main( String[] args ) throws RuntimeException {
+        if(args.length==0){
+            System.out.println("Unesite funkciju: ");
+            String function;
+            Scanner scanner = new Scanner(System.in);
+            function = scanner.nextLine();
+            System.out.println("Vrijednost unesenog aritmetičkog izraza: " + (new ExpressionEvaluator()).evaluate(function));
+        }
+        else {
             try {
                 String s = args[0];
                 if (!(s.charAt(0) == '(') || !(s.charAt(s.length()-1) == ')')) {
@@ -55,6 +65,7 @@ public class App{
                 e.printStackTrace();
             }
         }
+    }
 
     /**
      * Checks if char parameter is one of the operators we are working with
