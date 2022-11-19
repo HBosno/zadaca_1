@@ -22,8 +22,8 @@ public class ExpressionEvaluatorTest {
     }
 
     @Test
-    public void invalidSqrtTest(){
-        String s = "( sqrt ( 5 ) + sqrt 3 )";
+    public void invalidInputTest(){
+        String s = "( 5 + + )";
         assertThrows(RuntimeException.class, () -> {new ExpressionEvaluator().evaluate(s);});
     }
 
